@@ -56,11 +56,11 @@ class AuthController extends Controller
         ]);
 
         DB::beginTransaction();
-        // dd($validated);
+        //dd($request);
         $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'kota' => $request->kota,
+            'kota' => $request->kota_nama,
             'alamat' => $request->alamat,
             'password' => Hash::make($request->password),
             'role_id' => 3 
@@ -69,7 +69,10 @@ class AuthController extends Controller
         Profil::create([
             'user_id' => $user->id,
             'no_telepon' => $validated['no_telepon'],
-            'alamat' => "{$validated['alamat']}, {$validated['kelurahan']}, Kec. {$validated['kecamatan']}"
+            'alamat' => $validated['alamat'],
+            'kota' => $validated['kota_nama'],
+            'kecamatan' => $validated['kecamatan_nama'],
+            'kelurahan' => $validated['kelurahan_nama'],
         ]);
 
         DB::commit();
@@ -93,7 +96,7 @@ class AuthController extends Controller
         $user = Auth::user();
         
         return match($user->role_id) {
-            1 => '/adminsapi/dashboard',    // Admin Sapi
+            1 => '/Superadmin/dashboard',    // Superadmin
             2 => '/adminpenjualan/dashboard',  // Admin Penjualan
             default => '/HalamanUtama',        // Customer
         };

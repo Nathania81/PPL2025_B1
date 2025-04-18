@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_produk');
             $table->text('deskripsi');
-            $table->string('jenis_produk');
             $table->integer('stok');
             $table->decimal('harga', 10, 2);
-            $table->string('satuan');
             $table->string('foto')->nullable();
             $table->timestamps();
         });
@@ -30,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('katalog');
+        Schema::table('katalog', function (Blueprint $table) {
+            $table->string('jenis_produk')->nullable(); // tambahkan kembali jika rollback
+        });
     }
 };

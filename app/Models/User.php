@@ -32,11 +32,16 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(Profile::class);
+        return $this->hasOne(Profil::class);
     }
 
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function profil()
+{
+    return $this->hasOne(Profil::class);
+}
 }

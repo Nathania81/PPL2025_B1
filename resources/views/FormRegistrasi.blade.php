@@ -14,7 +14,7 @@
             Lengkapi informasi di bawah ini untuk membuat akun baru
         </p>
         
-        <!-- Tambahkan notifikasi error -->
+        <!-- Notifikasi Error -->
         @if($errors->any())
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             <ul>
@@ -25,7 +25,7 @@
         </div>
         @endif
 
-        <!-- Tambahkan notifikasi sukses -->
+        <!-- Notifikasi Sukses -->
         @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
             {{ session('success') }}
@@ -39,160 +39,161 @@
                 <div class="flex-1 space-y-4">
                     <div>
                         <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                        <input 
-                            type="text" 
-                            id="nama" 
-                            name="nama" 
-                            value="{{ old('nama') }}"
-                            placeholder="Masukkan nama lengkap" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required
+                            placeholder="Masukkan nama lengkap"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                     <div>
                         <label for="no_telepon" class="block text-sm font-medium text-gray-700 mb-1">No. Handphone</label>
-                        <input 
-                            type="text" 
-                            id="no_telepon" 
-                            name="no_telepon" 
-                            value="{{ old('no_telepon') }}"
-                            placeholder="Masukkan nomor handphone" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <input type="text" id="no_telepon" name="no_telepon" value="{{ old('no_telepon') }}" required
+                            placeholder="Masukkan nomor handphone"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            value="{{ old('email') }}"
-                            placeholder="Masukkan email" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                            placeholder="Masukkan email"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Masukkan password" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <input type="password" id="password" name="password" required
+                            placeholder="Masukkan password"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                        <input 
-                            type="password" 
-                            id="password_confirmation" 
-                            name="password_confirmation" 
-                            placeholder="Masukkan ulang password" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <input type="password" id="password_confirmation" name="password_confirmation" required
+                            placeholder="Masukkan ulang password"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                     <div class="flex items-center mt-2">
-                        <input 
-                            type="checkbox" 
-                            id="show-password" 
-                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                        >
+                        <input type="checkbox" id="show-password" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
                         <label for="show-password" class="ml-2 text-sm text-gray-700">Tampilkan kata sandi</label>
                     </div>
                 </div>
-                
+
                 <!-- Kolom kanan: Data Alamat -->
                 <div class="flex-1 space-y-4">
                     <div>
                         <label for="kota" class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
-                        <select 
-                            id="kota" 
-                            name="kota" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <select id="kota" name="kota" required
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">Pilih Kota/Kabupaten</option>
-                            <option value="Jember" {{ old('kota') == 'Jember' ? 'selected' : '' }}>Jember</option>
-                            <option value="Surabaya" {{ old('kota') == 'Surabaya' ? 'selected' : '' }}>Surabaya</option>
                         </select>
                     </div>
-                    
+
                     <div>
                         <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                        <select 
-                            id="kecamatan" 
-                            name="kecamatan" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <select id="kecamatan" name="kecamatan" required
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">Pilih Kecamatan</option>
-                            <option value="Ambulu" {{ old('kecamatan') == 'Ambulu' ? 'selected' : '' }}>Ambulu</option>
-                            <option value="Kedung Banto" {{ old('kecamatan') == 'Kedung Banto' ? 'selected' : '' }}>Kedung Banto</option>
                         </select>
                     </div>
-                    
+
                     <div>
                         <label for="kelurahan" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan</label>
-                        <select 
-                            id="kelurahan" 
-                            name="kelurahan" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <select id="kelurahan" name="kelurahan" required
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">Pilih Desa/Kelurahan</option>
-                            <option value="Tegalsari" {{ old('kelurahan') == 'Tegalsari' ? 'selected' : '' }}>Tegalsari</option>
-                            <option value="Sumbersari" {{ old('kelurahan') == 'Sumbersari' ? 'selected' : '' }}>Sumbersari</option>
                         </select>
                     </div>
-                    
+
                     <div>
                         <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
-                        <input 
-                            type="text" 
-                            id="alamat" 
-                            name="alamat" 
-                            value="{{ old('alamat') }}"
-                            placeholder="Masukkan alamat lengkap (nama jalan, nomor rumah, dll)" 
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
+                        <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required
+                            placeholder="Masukkan alamat lengkap"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
             </div>
-            
-            <button 
-                type="submit" 
-                class="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
+
+            <!-- Hidden inputs -->
+            <input type="hidden" name="kota_nama" id="kota_nama">
+            <input type="hidden" name="kecamatan_nama" id="kecamatan_nama">
+            <input type="hidden" name="kelurahan_nama" id="kelurahan_nama">
+
+            <button type="submit"
+                class="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm transition">
                 Submit Registrasi
             </button>
         </form>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const passwordInput = document.getElementById("password");
-            const showPasswordCheckbox = document.getElementById("show-password");
+        document.addEventListener("DOMContentLoaded", async function () {
+            const kotaSelect = document.getElementById("kota");
+            const kecamatanSelect = document.getElementById("kecamatan");
+            const kelurahanSelect = document.getElementById("kelurahan");
 
-            // Toggle password visibility
-            showPasswordCheckbox.addEventListener("change", function() {
-                passwordInput.type = this.checked ? "text" : "password";
+            const kotaNama = document.getElementById("kota_nama");
+            const kecamatanNama = document.getElementById("kecamatan_nama");
+            const kelurahanNama = document.getElementById("kelurahan_nama");
+
+            const showPassword = document.getElementById("show-password");
+            const password = document.getElementById("password");
+            const confirm = document.getElementById("password_confirmation");
+
+            showPassword.addEventListener("change", () => {
+                const type = showPassword.checked ? "text" : "password";
+                password.type = type;
+                confirm.type = type;
             });
 
-            // Hapus event listener submit default
-            document.getElementById("registrationForm").addEventListener("submit", function(e) {
-                // Biarkan form submit secara normal
-                // Hapus event.preventDefault() dan validasi JavaScript
+            // Load data kota dari API Indonesia
+            async function fetchWilayah(url) {
+                const response = await fetch(url);
+                return await response.json();
+            }
+
+            async function loadKota() {
+                const data = await fetchWilayah("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/35.json");
+                kotaSelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
+                data.forEach(k => {
+                    kotaSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
+                });
+            }
+
+            async function loadKecamatan(kotaId) {
+                const data = await fetchWilayah(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kotaId}.json`);
+                kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                kelurahanSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
+                data.forEach(k => {
+                    kecamatanSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
+                });
+            }
+
+            async function loadKelurahan(kecamatanId) {
+                const data = await fetchWilayah(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`);
+                kelurahanSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
+                data.forEach(k => {
+                    kelurahanSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
+                });
+            }
+
+            kotaSelect.addEventListener("change", () => {
+                const selected = kotaSelect.options[kotaSelect.selectedIndex];
+                kotaNama.value = selected.text;
+                loadKecamatan(kotaSelect.value);
             });
+
+            kecamatanSelect.addEventListener("change", () => {
+                const selected = kecamatanSelect.options[kecamatanSelect.selectedIndex];
+                kecamatanNama.value = selected.text;
+                loadKelurahan(kecamatanSelect.value);
+            });
+
+            kelurahanSelect.addEventListener("change", () => {
+                const selected = kelurahanSelect.options[kelurahanSelect.selectedIndex];
+                kelurahanNama.value = selected.text;
+            });
+
+            loadKota();
         });
     </script>
 </body>

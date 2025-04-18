@@ -19,7 +19,6 @@ class Profil extends Model
         'kelurahan',
         'kecamatan',
         'alamat',
-        'foto_profil'
     ];
 
     public function user()

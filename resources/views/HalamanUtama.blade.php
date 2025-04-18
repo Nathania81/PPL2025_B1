@@ -31,6 +31,7 @@
                 </svg>
             </button>
             <button class="text-white hover:text-cyan-300 transition-colors duration-300">
+                <a href="{{ route('profil.show') }}" class="text-white hover:text-cyan-300 transition-colors duration-300">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 15c2.636 0 5.082.76 7.121 2.05M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>

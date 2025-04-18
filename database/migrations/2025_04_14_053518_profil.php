@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('no_telepon', 13);
-        
+            
+            $table->string('kota')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kelurahan')->nullable();
+
             $table->text('alamat');
-            $table->string('foto_profil')->nullable();
             $table->timestamps();
         });
     }
