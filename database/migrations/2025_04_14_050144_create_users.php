@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('kota');
-            $table->string('alamat');   
+            $table->string('alamat');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
-            
+
         });
     }
 

@@ -5,9 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\KatalogController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\TransaksiController;
 
 Route::get('/', function () {
-    return view('HalamanUtama');
+    return view('AdminPenjualan.Transaksi.HalamanTransaksi');
 });
 
 // Authentication Routes
@@ -24,10 +25,6 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 });
 
-Route::get('/HalamanKatalogCust', function () {
-    return view('/customer/HalamanKatalogCust');
-});
-
 Route::get('/HalamanAkun', function () {
     return view('HalamanAkun');
 });
@@ -38,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profil/update', [ProfilController::class, 'update'])->name('profil.update');
 });
 
-Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
+// Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
 
 
 Route::get('/admin/katalog', [KatalogController::class, 'index'])->name('admin.katalog.index');
@@ -67,4 +64,31 @@ Route::get('/admin/katalog/{id}/detail', [KatalogController::class, 'detail'])->
 // Route::get('Akun', function () {
 //     return view('HalamanAkun');
 // });
+
+// Katalog Customer
+Route::get('/HalamanKatalog', [KatalogController::class, 'ShowDataKatalog'])->name('ShowDataKatalog');
+
+Route::post('/HalamanKatalog/Keranjang', [TransaksiController::class, 'KlikBeliSekarang'])->name('KlikBeliSekarang');
+
+// Transaksi route
+// Form Kasir
+Route::get('/FormKasir', [TransaksiController::class, 'ShowFormKasir'])->name('FormKasir');
+
+Route::post('/FormKasir/Simpan', [TransaksiController::class, 'KlikSimpan'])->name('KlikSimpan');
+
+// Form Buat Transaksi
+Route::get('/FormTransaksi', [TransaksiController::class, 'ShowFormTransaksi'])->name('ShowFormTransaksi');
+
+Route::post('/FormTransaksi/Simpan', [TransaksiController::class, 'KlikBuatPesanan'])->name('KlikBuatPesanan');
+
+// Melihat Transaksi Admin Penjualan
+Route::get('/HalamanTransaksi', [TransaksiController::class, 'ShowDataTransaksi'])->name('ShowDataTransaksi');
+
+// Mengubah status transaksi admin penjualan
+Route::post('/UbahStatusTransaksi/{id}', [TransaksiController::class, 'UbahStatusTransaksi'])->name('UbahStatusTransaksi');
+
+// Melihat Transaksi Customer
+Route::get('/TransaksiSaya', [TransaksiController::class, 'TransaksiCustomer'])->name('TransaksiCustomer');
+
+Route::post('/TransaksiSaya/Selesai/{id}', [TransaksiController::class, 'KonfirmasiSelesai'])->name('KonfirmasiSelesai');
 

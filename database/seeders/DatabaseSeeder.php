@@ -14,19 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        
+        User::factory(10)->create();
+
         Role::factory()->create([
             'nama_role' => 'admin',
         ]);
         Role::factory()->create([
             'nama_role' => 'superadmin',
         ]);
-        
+
         Role::factory()->create([
             'nama_role' => 'customer',
         ]);
-        
+
         User::factory()->create([
             'nama' => 'Test User',
             'email' => 'test@example.com',
@@ -35,6 +35,6 @@ class DatabaseSeeder extends Seeder
             'password' => '12345678',
             'role_id' => 1,
         ]);
-        
+
     }
 }

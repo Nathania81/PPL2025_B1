@@ -11,4 +11,8 @@ class Katalog extends Model
     protected $fillable = [
         'nama_produk', 'deskripsi', 'harga', 'stok', 'satuan','foto'
     ];
+
+    public function DetailTransaksi(){
+        return $this->hasMany(DetailTransaksi::class);
+    }
 }

@@ -47,7 +47,7 @@ class ProfilController extends Controller
     ]);
 
     $user = Auth::user();
-    $user->update(['name' => $request->name]);
+    // $user->update(['name' => $request->name]);
 
     $profil = $user->profil;
     $profil->no_telepon = $request->no_telepon;

@@ -6,18 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Katalog; // <-- ini WAJIB ADA
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class KatalogController extends Controller
 {
     public function index()
     {
         $katalog = Katalog::where('stok', '>', 0)->get();
-        return view('Admin.katalog.index', compact('katalog'));
+        return view('AdminPenjualan.Katalog.index', compact('katalog'));
     }
 
     public function create()
     {
-        return view('Admin.katalog.create');
+        return view('AdminPenjualan.Katalog.create');
     }
 
     public function store(Request $request)
@@ -36,7 +37,7 @@ class KatalogController extends Controller
 
         Katalog::create($validated);
 
-        return redirect()->route('admin.katalog.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('AdminPenjualan.katalog.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -81,5 +82,11 @@ class KatalogController extends Controller
     {
         $katalog = Katalog::findOrFail($id);
         return response()->json($katalog);
+    }
+
+    // Katalog customer
+    public function ShowDataKatalog(){
+        $katalogs = DB::table('katalog')->get();
+        return view('Customer.Katalog.HalamanKatalog', compact('katalogs'));
     }
 }
