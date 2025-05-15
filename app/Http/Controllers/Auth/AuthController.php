@@ -65,15 +65,16 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => 3 
         ]);
-        
-        Profil::create([
+
+        $profile = Profil::create([
             'user_id' => $user->id,
-            'no_telepon' => $validated['no_telepon'],
-            'alamat' => $validated['alamat'],
-            'kota' => $validated['kota_nama'],
-            'kecamatan' => $validated['kecamatan_nama'],
-            'kelurahan' => $validated['kelurahan_nama'],
+            'no_telepon' => $request->no_telepon,
+            'alamat' => $request->alamat,
+            'kota' => $request->kota_nama,
+            'kecamatan' => $request->kecamatan_nama,
+            'kelurahan' => $request->kelurahan_nama
         ]);
+
 
         DB::commit();
 

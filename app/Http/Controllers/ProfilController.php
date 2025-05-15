@@ -17,6 +17,7 @@ class ProfilController extends Controller
 
         return view('Customer.profil.show', [
             'title' => 'Profil Saya',
+            'user' => $user,
             'profil' => $profil,
             'hideNavbar' => true
         ]);
@@ -29,6 +30,7 @@ class ProfilController extends Controller
 
         return view('Customer.profil.edit', [
             'title' => 'Edit Profil',
+            'user' => $user,
             'profil' => $profil,
             'hideNavbar' => true
         ]);
@@ -37,27 +39,36 @@ class ProfilController extends Controller
     public function update(Request $request)
 {
     $request->validate([
-        'name' => 'required|string|max:255',
-        'no_telepon' => 'required|max:13',
-        'alamat' => 'required|string',
-        'kabupaten' => 'required|string',
-        'kecamatan' => 'required|string',
-        'desa' => 'required|string',
-        'foto_profil' => 'nullable|image|max:2048'
+        'nama' => 'required|string|max:255',
+        'no_telepon' => 'required|string|max:13',
+        'kota' => 'required|string|max:255',
+        'kecamatan' => 'required|string|max:255',
+        'kelurahan' => 'required|string|max:255',
+        'alamat' => 'required|string|max:500',
     ]);
 
     $user = Auth::user();
     $user->update(['name' => $request->name]);
+    $user->update([
+            'nama' => $request->nama,
+            'kota' => $request->kota,
+            'alamat' => $request->alamat
+        ]);
 
-    $profil = $user->profil;
-    $profil->no_telepon = $request->no_telepon;
-    $profil->kota = $request->kota;
-    $profil->kecamatan = $request->kecamatan;
-    $profil->kelurahan = $request->kelurahan;
-    $profil->alamat = $request->alamat;
+    $profilData = [
+            'no_telepon' => $request->no_telepon,
+            'kota' => $request->kota,
+            'kecamatan' => $request->kecamatan,
+            'kelurahan' => $request->kelurahan,
+            'alamat' => $request->alamat
+        ];
 
-    $profil->save();
+        if ($user->profil) {
+            $user->profil()->update($profilData);
+        } else {
+            $user->profil()->create($profilData);
+        }
 
-    return redirect()->route('profil.show')->with('success', 'Data profil berhasil diubah!');
-}
+        return redirect()->route('profil.show')->with('success', 'Data profil berhasil diperbarui!');
+    }
 }

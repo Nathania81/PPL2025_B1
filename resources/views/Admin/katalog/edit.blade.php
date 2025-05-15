@@ -35,13 +35,6 @@
             class="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-accent focus:outline-none">
     </div>
 
-    {{-- Satuan --}}
-    <div class="mb-6">
-        <label for="satuan" class="block mb-2 font-medium text-secondary">Satuan</label>
-        <input type="text" id="satuan" name="satuan" value="{{ old('satuan', $katalog->satuan) }}" required
-            class="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-accent focus:outline-none">
-    </div>
-
     {{-- Foto (Opsional) --}}
     <div class="mb-6">
         <label for="foto" class="block mb-2 font-medium text-secondary">Gambar Produk (kosongkan jika tidak diganti)</label>

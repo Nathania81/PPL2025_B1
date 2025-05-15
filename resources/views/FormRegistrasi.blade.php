@@ -125,76 +125,119 @@
         </form>
     </div>
 
+    <!-- Modal Pop-Up Notifikasi -->
+    <div id="successModal" class="fixed inset-0 hidden items-center justify-center bg-cyan-50 bg-opacity-50 z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full shadow-lg text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Registrasi Berhasil!</h2>
+            <p class="text-gray-600 mb-4">Akun Anda berhasil dibuat.</p>
+            <button id="closeModalButton" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition">
+                OK
+            </button>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            const kotaSelect = document.getElementById("kota");
-            const kecamatanSelect = document.getElementById("kecamatan");
-            const kelurahanSelect = document.getElementById("kelurahan");
+    document.addEventListener("DOMContentLoaded", async function () {
+    const kotaSelect = document.getElementById("kota");
+    const kecamatanSelect = document.getElementById("kecamatan");
+    const kelurahanSelect = document.getElementById("kelurahan");
 
-            const kotaNama = document.getElementById("kota_nama");
-            const kecamatanNama = document.getElementById("kecamatan_nama");
-            const kelurahanNama = document.getElementById("kelurahan_nama");
+    const kotaNama = document.getElementById("kota_nama");
+    const kecamatanNama = document.getElementById("kecamatan_nama");
+    const kelurahanNama = document.getElementById("kelurahan_nama");
 
-            const showPassword = document.getElementById("show-password");
-            const password = document.getElementById("password");
-            const confirm = document.getElementById("password_confirmation");
+    const showPassword = document.getElementById("show-password");
+    const password = document.getElementById("password");
+    const confirm = document.getElementById("password_confirmation");
 
-            showPassword.addEventListener("change", () => {
-                const type = showPassword.checked ? "text" : "password";
-                password.type = type;
-                confirm.type = type;
-            });
+    const successModal = document.getElementById("successModal");
+    const closeModalButton = document.getElementById("closeModalButton");
 
-            // Load data kota dari API Indonesia
-            async function fetchWilayah(url) {
-                const response = await fetch(url);
-                return await response.json();
-            }
+    showPassword.addEventListener("change", () => {
+        const type = showPassword.checked ? "text" : "password";
+        password.type = type;
+        confirm.type = type;
+    });
 
-            async function loadKota() {
-                const data = await fetchWilayah("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/35.json");
-                kotaSelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
-                data.forEach(k => {
-                    kotaSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
-                });
-            }
+    document.getElementById("registrationForm").addEventListener("submit", function (event) {
+        const email = document.getElementById("email").value;
+        const noTelepon = document.getElementById("no_telepon").value;
 
-            async function loadKecamatan(kotaId) {
-                const data = await fetchWilayah(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kotaId}.json`);
-                kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
-                kelurahanSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
-                data.forEach(k => {
-                    kecamatanSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
-                });
-            }
+        // Validasi email harus @gmail.com
+        if (!email.endsWith("@gmail.com")) {
+            alert("Email harus diakhiri dengan '@gmail.com'");
+            event.preventDefault();
+            return;
+        }
 
-            async function loadKelurahan(kecamatanId) {
-                const data = await fetchWilayah(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`);
-                kelurahanSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
-                data.forEach(k => {
-                    kelurahanSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
-                });
-            }
+        // Validasi nomor telepon hanya angka
+        if (!/^\d+$/.test(noTelepon)) {
+            alert("Nomor telepon hanya boleh berupa angka");
+            event.preventDefault();
+            return;
+        }
 
-            kotaSelect.addEventListener("change", () => {
-                const selected = kotaSelect.options[kotaSelect.selectedIndex];
-                kotaNama.value = selected.text;
-                loadKecamatan(kotaSelect.value);
-            });
+        // Jika validasi lolos, tampilkan modal pop-up
+        successModal.classList.remove("hidden");
+        successModal.classList.add("flex");
+    });
 
-            kecamatanSelect.addEventListener("change", () => {
-                const selected = kecamatanSelect.options[kecamatanSelect.selectedIndex];
-                kecamatanNama.value = selected.text;
-                loadKelurahan(kecamatanSelect.value);
-            });
+    closeModalButton.addEventListener("click", function () {
+        successModal.classList.add("hidden");
+        window.location.href = "{{route('login')}}";
+    });
 
-            kelurahanSelect.addEventListener("change", () => {
-                const selected = kelurahanSelect.options[kelurahanSelect.selectedIndex];
-                kelurahanNama.value = selected.text;
-            });
+    async function fetchWilayah(url) {
+        const response = await fetch(url);
+        return await response.json();
+    }
 
-            loadKota();
+    async function loadKota() {
+        const data = await fetchWilayah("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/35.json");
+        kotaSelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
+        data.forEach(k => {
+            kotaSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
         });
+    }
+
+    async function loadKecamatan(kotaId) {
+        const data = await fetchWilayah(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kotaId}.json`);
+        kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
+        kelurahanSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
+        data.forEach(k => {
+            kecamatanSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
+        });
+    }
+
+    async function loadKelurahan(kecamatanId) {
+        const data = await fetchWilayah(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`);
+        kelurahanSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
+        data.forEach(k => {
+            kelurahanSelect.innerHTML += `<option value="${k.id}">${k.name}</option>`;
+        });
+    }
+
+    kotaSelect.addEventListener("change", () => {
+        const selected = kotaSelect.options[kotaSelect.selectedIndex];
+        kotaNama.value = selected.text;
+        loadKecamatan(kotaSelect.value);
+    });
+
+    kecamatanSelect.addEventListener("change", () => {
+        const selected = kecamatanSelect.options[kecamatanSelect.selectedIndex];
+        kecamatanNama.value = selected.text;
+        loadKelurahan(kecamatanSelect.value);
+    });
+
+    kelurahanSelect.addEventListener("change", () => {
+        const selected = kelurahanSelect.options[kelurahanSelect.selectedIndex];
+        kelurahanNama.value = selected.text;
+    });
+
+    loadKota();
+    });
+
     </script>
+
 </body>
 </html>

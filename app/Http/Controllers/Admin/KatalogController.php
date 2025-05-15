@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Katalog; // <-- ini WAJIB ADA
+use App\Models\Katalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,12 +12,12 @@ class KatalogController extends Controller
     public function index()
     {
         $katalog = Katalog::where('stok', '>', 0)->get();
-        return view('Admin.katalog.index', compact('katalog'));
+        return view('admin.katalog.index', compact('katalog'));
     }
 
     public function create()
     {
-        return view('Admin.katalog.create');
+        return view('admin.katalog.create');
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class KatalogController extends Controller
     public function edit($id)
     {
         $katalog = Katalog::findOrFail($id);
-        return view('Admin.katalog.edit', compact('katalog'));
+        return view('admin.katalog.edit', compact('katalog'));
     }
 
     public function update(Request $request, $id)
@@ -54,7 +54,6 @@ class KatalogController extends Controller
             'deskripsi' => 'required|string',
             'harga' => 'required|numeric',
             'stok' => 'required|integer',
-            'satuan' => 'required|string',
             'foto' => 'nullable|image|max:2048',
         ]);
 
@@ -73,7 +72,10 @@ class KatalogController extends Controller
     public function destroy($id)
     {
         $katalog = Katalog::findOrFail($id);
-        $katalog->delete(); // Soft delete
+        if ($katalog->foto) {
+            Storage::disk('public')->delete($katalog->foto);
+        }
+        $katalog->delete();
         return response()->json(['success' => true]);
     }
 
