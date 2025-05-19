@@ -7,9 +7,7 @@ use App\Http\Controllers\Admin\KatalogController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\TransaksiController;
 
-Route::get('/', function () {
-    return view('AdminPenjualan.Transaksi.HalamanTransaksi');
-});
+Route::get('/', [KatalogController::class, 'ShowDataKatalog'])->name('ShowDataKatalog');
 
 // Authentication Routes
 
@@ -90,5 +88,11 @@ Route::post('/UbahStatusTransaksi/{id}', [TransaksiController::class, 'UbahStatu
 // Melihat Transaksi Customer
 Route::get('/TransaksiSaya', [TransaksiController::class, 'TransaksiCustomer'])->name('TransaksiCustomer');
 
+// Melihat detail transaksi
+Route::get('/TransaksiSaya/{id}/detail', [TransaksiController::class, 'ShowDetailTransaksiCust'])->name('ShowDetailTransaksiCust');
+
+
 Route::post('/TransaksiSaya/Selesai/{id}', [TransaksiController::class, 'KonfirmasiSelesai'])->name('KonfirmasiSelesai');
 
+// Melihat detail transaksi
+Route::get('/transaksi/{id}/detail', [TransaksiController::class, 'ShowDetailTransaksi'])->name('ShowDetailTransaksi');

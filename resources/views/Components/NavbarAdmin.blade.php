@@ -4,7 +4,14 @@
     <div class="flex flex-1">
         <a href="/dashboard" class="px-5 py-4 text-white no-underline hover:bg-secondary/20 transition-colors duration-300 ease-in-out {{ request()->is('dashboard') ? 'text-cyan-300' : '' }}">Dashboard</a>
         <a href="/katalog" class="px-5 py-4 text-white no-underline hover:bg-secondary/20 transition-colors duration-300 ease-in-out {{ request()->is('katalog') ? 'text-cyan-300' : '' }}">Katalog</a>
-        <a href="/transaksi" class="px-5 py-4 text-white no-underline hover:bg-secondary/20 transition-colors duration-300 ease-in-out {{ request()->is('transaksi') ? 'text-cyan-300' : '' }}">Transaksi</a>
+        <div class="relative">
+            <button id="transaksiButton" class="px-5 py-4 hover:bg-secondary/20">Transaksi</button>
+            <div id="submenuTransaksi" class="absolute bg-primary mt-1 rounded shadow-lg hidden">
+                <a href="/FormKasir" class="block px-5 py-3 hover:bg-secondary/30">Form Kasir</a>
+                <a href="/HalamanTransaksi" class="block px-5 py-3 hover:bg-secondary/30">Lihat Transaksi Customer</a>
+            </div>
+        </div>
+
         <a href="/laporan" class="px-5 py-4 text-white no-underline hover:bg-secondary/20 transition-colors duration-300 ease-in-out {{ request()->is('laporan') ? 'text-cyan-300' : '' }}">Laporan</a>
     </div>
     <div class="flex items-center space-x-4 ml-auto">
@@ -20,3 +27,19 @@
         </a>
     </div>
 </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("transaksiButton");
+        const submenu = document.getElementById("submenuTransaksi");
+
+        btn.addEventListener("click", function (event) {
+            event.stopPropagation(); // supaya tidak tertutup langsung
+            submenu.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", function () {
+            submenu.classList.add("hidden");
+        });
+    });
+</script>

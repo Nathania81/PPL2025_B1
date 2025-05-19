@@ -1,57 +1,63 @@
 @extends('layouts.Customer')
 
 @section('content')
-    <div class="p-4">
-        <h1 class="text-xl font-bold mb-4">Daftar Transaksi</h1>
+<div class="p-6 max-w-5xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6 text-primary">Daftar Transaksi Anda</h1>
 
-        {{-- Filter Status --}}
-        <form method="GET" class="mb-4">
-            <label for="status">Filter Status:</label>
-            <select name="status" id="status" onchange="this.form.submit()" class="border rounded px-2 py-1">
-                <option value="">-- Semua --</option>
-                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Diproses</option>
-                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Dikirim</option>
-                <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Selesai</option>
-            </select>
-        </form>
+    {{-- Filter Status --}}
+    <form method="GET" class="mb-6 flex items-center gap-3">
+        <label for="status" class="font-medium">Filter Status:</label>
+        <select name="status" id="status" onchange="this.form.submit()" class="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:ring-blue-300">
+            <option value="">-- Semua --</option>
+            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Diproses</option>
+            <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Dikirim</option>
+            <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Selesai</option>
+        </select>
+    </form>
 
-        <table class="w-full table-auto border-collapse border">
+    {{-- Tabel Transaksi --}}
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border border-gray-300 rounded-lg shadow">
             <thead>
-                <tr class="bg-gray-200">
-                    <th class="border p-2">ID</th>
-                    <th class="border p-2">Tanggal</th>
-                    <th class="border p-2">Metode Pengiriman</th>
-                    <th class="border p-2">Status</th>
-                    <th class="border p-2">Aksi</th>
+                <tr class="bg-secondary text-white">
+                    <th class="p-3 text-left">No</th>
+                    <th class="p-3 text-left">Tanggal</th>
+                    <th class="p-3 text-left">Metode Pengiriman</th>
+                    <th class="p-3 text-left">Status</th>
+                    <th class="p-3 text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse($transaksis as $transaksi)
-                    <tr>
-                        <td class="border p-2">{{ $transaksi->id }}</td>
-                        <td class="border p-2">{{ $transaksi->Tanggal_Transaksi }}</td>
-                        <td class="border p-2">{{ $transaksi->metode_pengiriman }}</td>
-                        <td class="border p-2">{{ $transaksi->status_transaksi }}</td>
-                        <td class="border p-2 text-center">
+            <tbody class="bg-white">
+                @foreach($transaksis as $index => $transaksi)
+                    <tr class="border-t hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600 hover:underline"><a href="{{ route('ShowDetailTransaksiCust', ['id' => $transaksi->id]) }}">{{$index +1}}</a></td>
+                        <td class="p-3">{{ $transaksi->Tanggal_Transaksi }}</td>
+                        <td class="p-3">{{ $transaksi->metode_pengiriman }}</td>
+                        <td class="p-3">
+                            @if($transaksi->statustransaksi_id == 1)
+                                <span class="text-yellow-600 font-semibold">Diproses</span>
+                            @elseif($transaksi->statustransaksi_id == 2)
+                                <span class="text-blue-600 font-semibold">Dikirim</span>
+                            @else
+                                <span class="text-green-600 font-semibold">Selesai</span>
+                            @endif
+                        </td>
+                        <td class="p-3 text-center">
                             @if($transaksi->statustransaksi_id == 2)
-                                {{-- Hanya jika status Dikirim --}}
                                 <form action="{{ route('KonfirmasiSelesai', $transaksi->id) }}" method="POST">
                                     @csrf
-                                    <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">
+                                    <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded shadow">
                                         Pesanan Diterima
                                     </button>
                                 </form>
                             @else
-                                <span class="text-gray-500">-</span>
+                                <span class="text-gray-400">-</span>
                             @endif
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="border p-2 text-center text-gray-500">Tidak ada transaksi ditemukan</td>
-                    </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>
+</div>
 @endsection
